@@ -19,10 +19,13 @@ class MainPageController extends Controller
 
     public function mainPageShow() {
         $this->mainPageService->handlePageShow();
-        return view('mainPage');
+        $context = $this->mainPageService->getContext();
+        return view('mainPage', $context);
     }
     public function mainPageStore() {
         $this->mainPageService->handleOptionsSelect();
-        return view('mainPage');
+        $this->mainPageService->deleteRow();
+        return redirect()->route('main');
+//        return view('mainPage');
     }
 }
