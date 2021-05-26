@@ -9,6 +9,7 @@ class DelfiRss extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'news_id',
         'title',
         'link',
         'description',

@@ -15,7 +15,8 @@ class CreateDelfiRssesTable extends Migration
     {
         Schema::create('delfi_rsses', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->integer('news_id');
+            $table->string('title')->nullable();
             $table->string('link');
             $table->mediumText('description');
             $table->string('image');

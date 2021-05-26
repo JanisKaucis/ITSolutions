@@ -25,6 +25,8 @@ class MainPageController extends Controller
     public function mainPageStore() {
         $this->mainPageService->handleOptionsSelect();
         $this->mainPageService->deleteRow();
+        $this->mainPageService->editTitle();
+        $this->mainPageService->sortTable();
         return redirect()->route('main');
 //        return view('mainPage');
     }

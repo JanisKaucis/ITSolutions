@@ -38,8 +38,12 @@
     <input class="button" type="submit" name="select" value="Choose">
 </form>
 <input class="button aqua" type="text" id="myInput" onkeyup="searchTable()" placeholder="Search for title">
-Click the button to sort the table alphabetically, by title:
-<button class="button" onclick="sortTable()">Sort</button>
+
+<form method="post">
+    @csrf
+    <label for="sort">Click the button to sort by title:</label>
+    <input type="submit" class="button" name="sort" value="Sort">
+</form>
 <div class="table-wrapper">
     <table id="table" class="fl-table">
         <tr>
@@ -48,19 +52,36 @@ Click the button to sort the table alphabetically, by title:
             <th>description</th>
             <th>Image</th>
             <th>Date</th>
+            <th>Edit Title</th>
             <th>Delete</th>
         </tr>
         @if(!empty($news))
             @foreach($news as $data)
                 <tr>
-                    <td>  {{ $data->title }}</td>
+                    <td>
+                        <div id="{{ $data->news_id }}">{{ $data->title }}</div>
+                        <div id="hide-{{ $data->news_id }}" style="display: none">
+                            <form method="post">
+                                @csrf
+                                <input name="id" value="{{ $data->news_id }}" type="hidden">
+                                <input name="title" value="{{ $data->title }}" type="hidden">
+                                <textarea id="title-hide" name="text" rows="4" cols="20">{{ $data->title }}</textarea>
+                                <input class="button" type="submit" name="edit" value="Edit">
+                            </form>
+                        </div>
+
+                    </td>
                     <td><a href="{{ $data->link }}">{{ $data->link }}</a></td>
                     <td>{{ $data->description }}</td>
                     <td><img height="100px" src="{{ $data->image }}" alt="News Image"></td>
                     <td>{{ $data->date }}</td>
                     <td>
+                        <button class="button" onclick="showEdit({{ $data->news_id }})">Edit</button>
+                    </td>
+                    <td>
                         <form method="post">
                             @csrf
+                            <input name="news_id" value="{{ $data->news_id }}" type="hidden">
                             <input name="value" value="{{ $data->title }}" type="hidden">
                             <input class="button" type="submit" name="delete" value="Delete">
                         </form>
@@ -71,6 +92,6 @@ Click the button to sort the table alphabetically, by title:
     </table>
 </div>
 </body>
+<script type="text/javascript" src="{{ asset('js/showEdit.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/searchTable.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/sortTable.js') }}"></script>
 </html>
