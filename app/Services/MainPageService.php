@@ -34,7 +34,7 @@ class MainPageService
             foreach ($xml->channel->item as $news) {
                 $title = $news->title;
                 $link = $news->link;
-                $description = $news->description;
+                $description = htmlspecialchars_decode($news->description);
                 $image = $news->children('media',true)->content->attributes();
                 $date = $news->pubDate;
                 DelfiRss::updateOrCreate([
