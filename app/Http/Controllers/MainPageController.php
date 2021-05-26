@@ -28,6 +28,5 @@ class MainPageController extends Controller
         $this->mainPageService->editTitle();
         $this->mainPageService->sortTable();
         return redirect()->route('main');
-//        return view('mainPage');
     }
 }
